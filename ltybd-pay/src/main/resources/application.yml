@@ -1,0 +1,70 @@
+server:
+  port: 9011
+  #domain: http://%s.dev.com:8101
+  #cookie_domain: .dev.com
+#  serviceIds:
+    # 不是本机开发  请勿填写localhost,127.0.0.1 尽量填写局域网IP
+#    ltybd-pay-one : 192.168.2.131:9011,192.168.2.131:9012
+
+spring:
+  dubbo:
+    application:
+      name: serviceserver
+#      spring.dubbo.registry.address=zookeeper://119.23.59.213:2182
+    registry:
+      address: multicast://224.5.6.7:1234?unicast=false
+    protocol:
+      name: dubbo
+      port: 20880
+    scan: com.ltybd.service
+    module:
+      name: ltybd-pay
+
+  elasticsearch:
+    cluster-name: es-cluster
+    cluster-nodes: 192.168.2.245:9300,192.168.2.246:9300,192.168.2.247:9300,192.168.2.248:9300,192.168.2.249:9300
+  kafka:
+    producer:
+      retries: 0
+      bootstrap-servers: 192.168.2.245:6667,192.168.2.246:6667,192.168.2.247:6667,192.168.2.248:6667,192.168.2.249:6667
+#      bootstrap-servers: 192.168.56.101:9092
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+      batch-size: 65536
+      buffer-memory: 524288
+#    consumer:
+#      bootstrap-servers: 192.168.56.101:9092
+#      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+#      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+#      group-id: defaultGroup
+#redis 单机配置
+  redis:
+    host: 127.0.0.1
+    port: 6379
+    database: 0
+
+#redis 集群配置
+xyy:
+  redis:
+    pool:
+      nodes: 192.168.2.245:7000,192.168.2.245:7001,192.168.2.246:7002,192.168.2.246:7003,192.168.2.247:7004,192.168.2.247:7005,192.168.2.248:7006,192.168.2.248:7007,192.168.2.249:7008,192.168.2.249:7009
+#      timeout: 3000
+      maxAttempts: 5
+pay:
+#    redis单机: redis    redis集群 :redisColony
+  cacheUseType: redisColony
+  serviceIds:
+      ltybd-pay-one: 192.168.2.131:9011
+      ltybd-pay-My: 192.168.5.129:9011
+      ltybd-pay-two: 192.168.2.247:9011
+      ltybd-pay-three: 192.168.2.245:9011
+      ltybd-pay-four: 192.168.2.246:9011
+      ltybd-pay-five: 192.168.2.248:9011
+      ltybd-pay-seven: 192.168.2.249:9011
+  data:
+    #监控时间 毫秒
+    intervalTime: 1000
+    #监控间隔次数
+    intervalNum: 4
+    #初始化时间隔时间
+    initTimer: 1000

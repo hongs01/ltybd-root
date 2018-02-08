@@ -1,0 +1,19 @@
+management:
+  security:
+    enabled: false
+demo:
+  env: local
+server:
+  port: 9009
+  #domain: http://%s.dev.com:8101
+  #cookie_domain: .dev.com
+spring:
+  dubbo:
+    application:
+      name: ltybd-op
+    #spring.dubbo.registry.address=zookeeper://119.23.59.213:2182
+    registry:
+      address: multicast://224.5.6.7:1234?unicast=false
+    scan: com.ltybd
+    module:
+      name: ltybd-op

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:hdp="http://www.springframework.org/schema/hadoop"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+    http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+    http://www.springframework.org/schema/hadoop http://www.springframework.org/schema/hadoop/spring-hadoop.xsd">
+
+   <!--  <context:property-placeholder location="classpath:/config/hbase.properties"/> -->
+    
+    
+    
+        <context:component-scan base-package="com.ltybd">
+   <!--  <context:include-filter type="regex" expression="com.ltybd.*"/> -->
+      <context:include-filter type="regex" expression=".service.*"/>
+    </context:component-scan> 
+    
+   <!--      <hdp:configuration id="hadoopConfiguration">
+                 fs.defaultFS=hdfs://master:8020
+         </hdp:configuration> -->
+         
+ 
+    
+     <!-- 配置zookeeper的信息，远程连接hbase时使用 -->    
+  
+    <hdp:configuration resources="classpath:/hbase-site.xml" /> 
+    <hdp:configuration resources="classpath:/hdfs-site.xml"/>
+     <hdp:configuration resources="classpath:/core-site.xml"/>
+    
+    <hdp:hbase-configuration configuration-ref="hadoopConfiguration" /> 
+    
+    <!-- specify ZooKeeper host/port -->
+    <!--  <hdp:hbase-configuration zk-quorum="slave02,slave03,slave04,master,slave01" zk-port="2181"/>  -->
+    
+      <!-- 配置HbaseTemplate -->    
+  
+    <bean id="htemplate" class="org.springframework.data.hadoop.hbase.HbaseTemplate" p:configuration-ref="hbaseConfiguration"></bean> 
+    
+    </beans>

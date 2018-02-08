@@ -1,0 +1,5 @@
+server:
+  port: 9009
+  #domain: http://%s.dev.com:8101
+  #cookie_domain: .dev.com
+    

@@ -1,0 +1,22 @@
+spring:
+  application:
+    name: ws-configserver
+#encrypt:
+#  failOnError: false
+  profiles:
+      active: subversion
+  cloud:
+    config:
+      enabled: true
+      server:
+#        git:
+#          uri: ${config.repo.uri:https://github.com/luoml/spring-cloud-example}
+#          searchPaths: config-repo
+        svn:
+          uri: svn://192.168.2.253/ltybd
+          default-label: ConfigRepo                 #default-label 配置为ConfigRepo后，启用的就是这个文件夹下的配置文件，以svn作为配置服务器，默认查找trunk文件夹，当使用git存储时，默认就是master
+          username: qiuws
+          password: 123456
+
+server:
+  port: 8888
